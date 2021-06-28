@@ -22,7 +22,7 @@ otx_client = OTXv2(os.environ.get("OTX_API_KEY"))
 def parseDorksList():
 
     with open('dorks.csv', mode='r') as dorks_file:
-        dorks_reader = csv.reader(dorks_file)
+        dorks_reader = csv.reader(dorks_file, delimiter=';')
         next(dorks_reader)
 
         for line in dorks_reader:
@@ -47,11 +47,11 @@ def parseDorksList():
 
 # Lookup given dork on Shodan
 def searchShodan(dork_name, dork):
+    print(dork)
 
     try:
         # Search Shodan
         results = shodan_client.search(dork)
-
         # Show the results
         ip_addresses = []
         for result in results['matches']:
