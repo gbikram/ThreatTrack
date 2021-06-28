@@ -1,2 +1,3 @@
 dataset,name,dork
+Shodan,QuasarRAT,ssl:"Quasar Server CA"
 Censys,QuasarRAT,443.https.tls.certificate.parsed.subject.common_name: "Quasar Server CA"
