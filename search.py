@@ -58,6 +58,12 @@ def parsequeriesList():
                 query_name = line[1]
                 query = line[2]
                 searchUrlscan(query_name, query)
+
+            # PublicWWW
+            elif(dataset == "PublicWWW" and tracking == "True"):
+                query_name = line[1]
+                query = line[2]
+                searchPublicWWW(query_name, query)
             
 
 # Lookup given query on Shodan
@@ -113,6 +119,19 @@ def searchUrlscan(query_name, query):
         createOtxPulse(query_name, urlscan_urls, 'URLScan', 'URL')
     else:
         print("No Results!")
+
+
+
+def searchPublicWWW(query_name, query):
+    publicwww_api_endpoint = "https://publicwww.com/websites/"
+    params = {
+        'export' : 'csvu',
+        'key': os.environ.get('PUBLICWWW_KEY')
+    }
+    publicwww_req = requests.get(publicwww_api_endpoint + query + '/', params)
+    print(publicwww_req.text)
+
+    # TO-DO: Parse and add ;-delimited URLs
 
 
 # Create OTX Pulse and add indicators
