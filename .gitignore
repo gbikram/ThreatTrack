@@ -2,3 +2,4 @@
 .vscode
 virtualenv
 autorun.sh
+.DS_Store
