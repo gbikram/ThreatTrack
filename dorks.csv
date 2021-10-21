@@ -1,4 +1,0 @@
-dataset,name,dork
-Censys,QuasarRAT,443.https.tls.certificate.parsed.subject.common_name: "Quasar Server CA"
-Shodan,QuasarRAT,ssl:"Quasar Server CA"
-Shodan,CobaltStrike,ssl:"146473198"
