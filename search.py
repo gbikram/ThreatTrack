@@ -24,6 +24,10 @@ otx_client = OTXv2(os.environ.get("OTX_API_KEY"))
 
 # Parse and lookup queries in queries.csv
 def parsequeriesList():
+
+    print("Parsing Queries Dataset...")
+    print()
+
     with open('queries.csv', mode='r') as queries_file:
         queries_reader = csv.reader(queries_file, delimiter=',')
         next(queries_reader)
@@ -37,13 +41,13 @@ def parsequeriesList():
             if(dataset == "Shodan" and tracking == "True"):
                 query_name = line[1]
                 query = line[2]
-                # searchShodan(query_name, query)
+                searchShodan(query_name, query)
             
             # Censys
             elif(dataset == "Censys" and tracking == "True"):
                 query_name = line[1]
                 query = line[2]
-                # searchCensys(query_name, query)
+                searchCensys(query_name, query)
             
             # ZoomEye
             elif(dataset == "Zoomeye" and tracking == "True"):
@@ -58,7 +62,8 @@ def parsequeriesList():
 
 # Lookup given query on Shodan
 def searchShodan(query_name, query):
-    print(query)
+
+    print("Querying Shodan for ", query_name)
 
     try:
         # Search Shodan
@@ -69,8 +74,10 @@ def searchShodan(query_name, query):
         for result in results['matches']:
             ip_addresses.append(result['ip_str'])
 
-        if(ip_addresses.len() > 0):
+        if(len(ip_addresses) > 0):
             createOtxPulse(query_name, ip_addresses, 'Shodan', 'IPv4')
+        else:
+            print("No Results!")
     
     except shodan.APIError as e:
         print('Error: {}'.format(e))
@@ -78,15 +85,23 @@ def searchShodan(query_name, query):
 
 # Lookup given query on Censys
 def searchCensys(query_name, query):
+
+    print("Querying Censys for ", query_name)
+
     ip_addresses = []
     for page in censys_ipv4_client.search(query):
         ip_addresses.append(page['ip'])
-    if(ip_addresses.len() > 0):
-        createOtxPulse(query_name, ip_addresses, 'Censys')
+    if(len(ip_addresses) > 0):
+        createOtxPulse(query_name, ip_addresses, 'Censys', 'IPv4')
+    else:
+        print("No Results!")
 
 
 # Lookup given query in URLScan
 def searchUrlscan(query_name, query):
+
+    print("Querying URLScan for ", query_name)
+
     urlscan_api_endpoint = "https://urlscan.io/api/v1/search/"
     params = {
         "q": query
@@ -94,8 +109,10 @@ def searchUrlscan(query_name, query):
     urlscan_req = requests.get(urlscan_api_endpoint, params)
     urlscan_response = urlscan_req.json()
     urlscan_urls = jmespath.search('results[].page.url', urlscan_response)
-    if(urlscan_urls.len() > 0):
+    if(len(urlscan_urls) > 0):
         createOtxPulse(query_name, urlscan_urls, 'URLScan', 'URL')
+    else:
+        print("No Results!")
 
 
 # Create OTX Pulse and add indicators
@@ -114,7 +131,8 @@ def createOtxPulse(query_name, indicators, dataset, indicators_type):
         pulse_indicators.append(pulse_indicator)
     
     response = otx_client.create_pulse(name=pulse_name ,public=False ,indicators=pulse_indicators ,tags=pulse_tags , references=[])
-
+    print("Pulse Created: ",pulse_name)
+    print()
 
 if __name__ == "__main__":
     parsequeriesList()

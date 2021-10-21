@@ -1,3 +1,4 @@
 .env
 .vscode
 virtualenv
+autorun.sh
