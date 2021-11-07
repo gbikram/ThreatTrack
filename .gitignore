@@ -3,3 +3,4 @@
 virtualenv
 autorun.sh
 .DS_Store
+queries.csv
