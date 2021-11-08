@@ -59,11 +59,11 @@ def parsequeriesList():
                 query = line[2]
                 searchUrlscan(query_name, query)
 
-            # PublicWWW
-            elif(dataset == "PublicWWW" and tracking == "True"):
-                query_name = line[1]
-                query = line[2]
-                searchPublicWWW(query_name, query)
+            # # PublicWWW
+            # elif(dataset == "PublicWWW" and tracking == "True"):
+            #     query_name = line[1]
+            #     query = line[2]
+            #     searchPublicWWW(query_name, query)
             
 
 # Lookup given query on Shodan
@@ -84,6 +84,7 @@ def searchShodan(query_name, query):
             createOtxPulse(query_name, ip_addresses, 'Shodan', 'IPv4')
         else:
             print("No Results!")
+            print()
     
     except shodan.APIError as e:
         print('Error: {}'.format(e))
@@ -101,6 +102,7 @@ def searchCensys(query_name, query):
         createOtxPulse(query_name, ip_addresses, 'Censys', 'IPv4')
     else:
         print("No Results!")
+        print()
 
 
 # Lookup given query in URLScan
@@ -119,6 +121,7 @@ def searchUrlscan(query_name, query):
         createOtxPulse(query_name, urlscan_urls, 'URLScan', 'URL')
     else:
         print("No Results!")
+        print()
 
 
 
@@ -136,7 +139,7 @@ def searchPublicWWW(query_name, query):
 
 # Create OTX Pulse and add indicators
 def createOtxPulse(query_name, indicators, dataset, indicators_type):
-    pulse_name = "Daily Indicators Lookup - " + query_name + " - " + dataset + " - " + (datetime.date.today().strftime('%Y%m%d'))
+    pulse_name = (query_name + " - " + dataset + " - " + (datetime.date.today().strftime('%Y%m%d')))
     pulse_indicators = []
     pulse_tags = []
     pulse_tags.append(query_name)
