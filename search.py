@@ -13,6 +13,7 @@ import datetime
 import requests
 import json
 import jmespath
+import pandas as pd
 
 load_dotenv()
 
@@ -33,7 +34,6 @@ def parsequeriesList():
         next(queries_reader)
 
         for line in queries_reader:
-            
             dataset = line[0]
             tracking = line[3]
 
@@ -59,11 +59,11 @@ def parsequeriesList():
                 query = line[2]
                 searchUrlscan(query_name, query)
 
-            # # PublicWWW
-            # elif(dataset == "PublicWWW" and tracking == "True"):
-            #     query_name = line[1]
-            #     query = line[2]
-            #     searchPublicWWW(query_name, query)
+            # PublicWWW
+            elif(dataset == "PublicWWW" and tracking == "True"):
+                query_name = line[1]
+                query = line[2]
+                searchPublicWWW(query_name, query)
             
 
 # Lookup given query on Shodan
@@ -132,10 +132,14 @@ def searchPublicWWW(query_name, query):
         'key': os.environ.get('PUBLICWWW_KEY')
     }
     publicwww_req = requests.get(publicwww_api_endpoint + query + '/', params)
-    print(publicwww_req.text)
-
-    # TO-DO: Parse and add ;-delimited URLs
-
+    
+    content_utf = publicwww_req.content.decode('utf-8')
+    csv_reader = csv.reader(content_utf.splitlines(), delimiter=';')
+    csv_list = list(csv_reader)
+    publicwww_indicators = []
+    for row in csv_list:
+        publicwww_indicators.append(row[0])
+    createOtxPulse(query_name, publicwww_indicators, 'PublicWWW', 'URL')
 
 # Create OTX Pulse and add indicators
 def createOtxPulse(query_name, indicators, dataset, indicators_type):
