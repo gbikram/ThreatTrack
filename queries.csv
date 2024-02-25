@@ -1,7 +1,7 @@
 dataset,name,query,tracking
 Censys,QuasarRAT,443.https.tls.certificate.parsed.subject.common_name: "Quasar Server CA",False
-Shodan,QuasarRAT,ssl:"Quasar Server CA",False
-Shodan,CobaltStrike,ssl:"146473198",False
+Shodan,QuasarRAT,ssl:"Quasar Server CA",True
+Shodan,CobaltStrike,ssl:"146473198",True
 URLScan,Ex Robotos Phishkit,page.url.keyword:/(http)(s)?:\/\/([a-z0-9]+\.)?([a-z0-9\-])+\.([a-z])+\/(.*)?\.well-known\/((login\.php\?ss=2(&)?.*)|(.*\/authorize_client_id\:.*))+/ AND date:>now-7d,True
 URLScan,LogoKit Phishkit,(filename:wgbground OR filename: wggebbma OR filename:vzbuQ.jpg) AND date:now-7d,True
 PublicWWW,Test Query,"UA-19778070-" depth:all,True
