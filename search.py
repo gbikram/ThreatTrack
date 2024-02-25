@@ -6,7 +6,7 @@ from pathlib import Path
 import shodan
 import pyfofa
 from zoomeye.sdk import ZoomEye
-from censys.search import CensysIPv4
+from censys.search import CensysHosts
 import csv
 from OTXv2 import OTXv2
 import datetime
@@ -19,7 +19,7 @@ load_dotenv()
 
 # Initialize dataset clients
 shodan_client = shodan.Shodan(os.environ.get("SHODAN_API_KEY"))
-censys_ipv4_client = CensysIPv4()
+censys_ipv4_client = CensysHosts()
 otx_client = OTXv2(os.environ.get("OTX_API_KEY"))
 
 
@@ -55,12 +55,16 @@ def parsequeriesList():
             
             # URLScan
             elif(dataset == "URLScan" and tracking == "True"):
+                print("URLScan Unavailable - skipping")
+                continue
                 query_name = line[1]
                 query = line[2]
                 searchUrlscan(query_name, query)
 
             # PublicWWW
             elif(dataset == "PublicWWW" and tracking == "True"):
+                print("PublicWWW Unavailable - skipping")
+                continue
                 query_name = line[1]
                 query = line[2]
                 searchPublicWWW(query_name, query)
