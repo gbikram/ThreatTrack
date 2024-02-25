@@ -3,7 +3,9 @@ name: Daily Python Script
 on:
   schedule:
     - cron: '15 1 * * *' # Schedule to run at midnight UTC every day
-
+  push:
+    branches:
+      - master
 jobs:
   run-python-script:
     runs-on: ubuntu-latest
