@@ -2,7 +2,7 @@ name: Daily Python Script
 
 on:
   schedule:
-    - cron: '15 1 * * *' # Schedule to run at midnight UTC every day
+    - cron: '0 */6 * * *' # Schedule to run at midnight UTC every day
   push:
     branches:
       - master
