@@ -19,7 +19,7 @@ load_dotenv()
 
 # Initialize dataset clients
 shodan_client = shodan.Shodan(os.environ.get("SHODAN_API_KEY"))
-censys_ipv4_client = CensysHosts()
+censys_ipv4_client = CensysHosts(api_id=os.environ.get("CENSYS_API_ID"), api_secret=os.environ.get("CENSYS_API_SECRET"))
 otx_client = OTXv2(os.environ.get("OTX_API_KEY"))
 
 
