@@ -5,7 +5,7 @@ Script parses through a CSV file containing queries for various online data sour
 **Data Sources Integrated:**
 * Censys (Fix pending)
 * Shodan
-* URLScan
+* URLScan (Fix Pending)
 
 **Data Sources Planned to be integrated:**
 * FOFA
