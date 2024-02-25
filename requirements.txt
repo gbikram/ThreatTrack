@@ -3,3 +3,5 @@ shodan
 OTXv2
 pyfofa
 zoomeye
+censys
+jmespath
