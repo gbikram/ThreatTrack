@@ -3,7 +3,7 @@
 Script parses through a CSV file containing queries for various online data sources that scrape and collect metadata on URLs, IPs, Domains and Files. The queries are run against the respective data sources and the resulting observables and uploaded to a given AlienVault OTX account for tracking. 
 
 **Data Sources Integrated:**
-* Censys
+* Censys (Fix pending)
 * Shodan
 * URLScan
 
